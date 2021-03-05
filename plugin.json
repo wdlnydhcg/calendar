@@ -1,0 +1,13 @@
+{
+	"pluginName": "calendar",
+	"description": "一个简单、好用、美观的日历插件",
+	"main": "index.html",
+	"version": "0.0.1",
+	"features": [
+		{
+		  "code": "rili",
+		  "explain": "hello world",
+			"cmds":["hello", "你好"]
+		}
+	]
+}
