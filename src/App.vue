@@ -17,8 +17,7 @@ export default defineComponent({
 <style>
 @import url('./assets/iconfont.css');
 #app {
-  background: #cccccc;
-  min-height: 100vh;
+  background: #ffffff;
 }
 @font-face {
   font-family: 'PuHuiTi';

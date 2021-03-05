@@ -2,7 +2,7 @@
   <div class="calendar-header">
     <div class="calendar-date">{{ currentDate.year }} 年 {{ currentDate.month }} 月 {{ currentDate.day }} 日</div>
     <div class="calendar-change-btn">
-      <i class="iconfont icon-yuebao icon-jin" @click="back" v-if="showJin"></i>
+      <i class="iconfont icon-jintian icon-jin" @click="back" v-if="showJin"></i>
       <i class="iconfont icon-Arrow-LeftCircle icon-arrow" @click="change('-')"></i>
       <i class="iconfont icon-nianbao icon-select" :class="{ 'icon-color': unit === 'year' }" @click="unit = 'year'"></i>
       <i class="iconfont icon-yuebao icon-select" :class="{ 'icon-color': unit === 'month' }" @click="unit = 'month'"></i>

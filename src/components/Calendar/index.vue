@@ -68,7 +68,6 @@ export default defineComponent({
   color: var(--text-color);
   padding: 32px 52px;
   box-sizing: border-box;
-  width: 600px;
   max-width: 850px;
   min-width: 400px;
 }
