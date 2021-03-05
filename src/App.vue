@@ -1,27 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <Calendar />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import Calendar from './components/Calendar/index.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    Calendar
   }
 })
 </script>
 
 <style>
+@import url('./assets/iconfont.css');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background: #cccccc;
+  min-height: 100vh;
+}
+@font-face {
+  font-family: 'PuHuiTi';
+  src: url('./assets/Alibaba-PuHuiTi-Medium.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'AlibabaSans';
+  src: url('./assets/AlibabaSans-Medium.otf') format('otf');
+  font-style: normal;
+  font-weight: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'PuHuiTi', 'AlibabaSans';
 }
 </style>

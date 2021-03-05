@@ -3,11 +3,17 @@
 	"description": "一个简单、好用、美观的日历插件",
 	"main": "index.html",
 	"version": "0.0.1",
+	"author": "lion1ou",
+	"preload": "preload.js",
+	"logo": "http://cdn.chuyunt.com/uPic/日历.png",
+	"pluginSetting": {
+    "height": 600
+	},
 	"features": [
 		{
 		  "code": "rili",
-		  "explain": "hello world",
-			"cmds":["hello", "你好"]
+		  "explain": "打开日历",
+			"cmds":["日历", "rili", "calendar", "rl"]
 		}
 	]
 }
