@@ -15,25 +15,24 @@ export default defineComponent({
 </script>
 
 <style>
-/* @import url('./assets/iconfont.css'); */
 #app {
   background: #ffffff;
 }
-@font-face {
+/* @font-face {
   font-family: 'PuHuiTi';
-  src: url('./assets/Alibaba-PuHuiTi-Medium.ttf') format('truetype');
+  src: url('http://cdn.chuyunt.com/Alibaba-PuHuiTi-Medium.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }
 @font-face {
   font-family: 'AlibabaSans';
-  src: url('./assets/AlibabaSans-Medium.otf') format('otf');
+  src: url('http://cdn.chuyunt.com/AlibabaSans-Medium.otf') format('otf');
   font-style: normal;
   font-weight: normal;
-}
+} */
 * {
   margin: 0;
   padding: 0;
-  font-family: 'PuHuiTi', 'AlibabaSans';
+  /* font-family: 'PuHuiTi', 'AlibabaSans'; */
 }
 </style>

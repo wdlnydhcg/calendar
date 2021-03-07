@@ -66,7 +66,7 @@ export default defineComponent({
   --bg-color: #ffffff;
   --text-color: #2c2c2e;
   --sub-text-color: #a1a0a3;
-  --dis-text-color: #f0f0f0;
+  --dis-text-color: #dbdbdb;
 }
 .calendar {
   background: var(--bg-color);

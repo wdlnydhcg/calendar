@@ -45,7 +45,7 @@ export default defineComponent({
   },
   computed: {
     dayMap(): Array<T> {
-      const dateStr = `${this.currentDate.year}-${this.currentDate.month}-1` // 每月1日
+      const dateStr = `${this.currentDate.year}/${this.currentDate.month}/1` // 每月1日
       let dateStrTime = new Date(dateStr).getTime()
       let dateStrWeek = new Date(dateStr).getDay()
       const firstDate = dateStrTime - dateStrWeek * 24 * 60 * 60 * 1000 // 日历的第一个日期
