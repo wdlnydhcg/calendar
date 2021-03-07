@@ -10,17 +10,19 @@
           :key="j.day"
           class="day-item"
           :class="{
-            'not-current-month': !j.isCurrentMonth,
             'is-today': j.isToday,
             'is-holiday': j.isHoliday,
             'is-weekend': j.isWeekend,
             'is-selected': j.isSelected,
-            'is-workday': j.isWorkDay
+            'is-workday': j.isWorkDay,
+            'not-current-month': !j.isCurrentMonth
           }"
           @click="select(j)"
         >
           <span>{{ j.day }}</span>
-          <span class="day-lunar">{{ j.lunar.festival ? j.lunar.festival : j.lunar.lunarFestival ? j.lunar.lunarFestival : j.lunar.IDayCn === '初一' ? j.lunar.IMonthCn : j.lunar.IDayCn }}</span>
+          <span class="day-lunar" :class="{ 'is-festival': j.isFestival && !j.isSelected }">
+            {{ j.lunar.festival ? j.lunar.festival : j.lunar.lunarFestival ? j.lunar.lunarFestival : j.lunar.IDayCn === '初一' ? j.lunar.IMonthCn : j.lunar.IDayCn }}
+          </span>
         </div>
       </div>
     </div>
@@ -29,8 +31,7 @@
 
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
-import { getYearMonthDay, holidayList, workdayList } from './utils'
-import { calendarjs } from './calendar'
+import { getYearMonthDay, holidayList, workdayList } from './utils.ts'
 export default defineComponent({
   name: 'CalendarContent',
   data() {
@@ -51,16 +52,16 @@ export default defineComponent({
       const result = []
       for (let i = 0; i < 6 * 7; i++) {
         const current = new Date(firstDate + i * 24 * 60 * 60 * 1000)
-        const { year, month, day, week } = getYearMonthDay(current)
+        const { year, month, day, week, lunar } = getYearMonthDay(current)
         const now = getYearMonthDay()
         let isHoliday = false // 是否是假日
-        holidayList.map((item) => {
+        holidayList.map((item: string) => {
           if (item === `${year}-${month}-${day}`) {
             isHoliday = true
           }
         })
         let isWorkDay = false // 是否是工作日
-        workdayList.map((item) => {
+        workdayList.map((item: string) => {
           if (item === `${year}-${month}-${day}`) {
             isWorkDay = true
           }
@@ -69,12 +70,12 @@ export default defineComponent({
         const isToday = now.day === day && now.month === month && now.year === year // 是否是今天
         const isWeekend = week === 6 || week === 0 // 是否是周末
         const isCurrentMonth = month === this.currentDate.month // 是否属于当前月
-        const lunar = calendarjs.solar2lunar(year, month, day) // 农历信息
+        const isFestival = lunar.festival || lunar.lunarFestival
         // 6行，7天为一行
         if (!result[Math.floor(i / 7)]) {
           result[Math.floor(i / 7)] = []
         }
-        result[Math.floor(i / 7)].push({ year, month, day, week, isHoliday, isWorkDay, isWeekend, isCurrentMonth, isToday, lunar, isSelected })
+        result[Math.floor(i / 7)].push({ year, month, day, week, isHoliday, isWorkDay, isWeekend, isCurrentMonth, isToday, lunar, isSelected, isFestival })
       }
       console.log(result)
       return result
@@ -142,6 +143,7 @@ export default defineComponent({
       font-size: 10px;
       width: 14px;
       height: 14px;
+      border-radius: 14px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -149,14 +151,14 @@ export default defineComponent({
     }
   }
   .is-holiday {
-    border: 1px solid var(--sub-main-color);
+    // border: 1px solid var(--sub-main-color);
     &:before {
       content: '休';
       background: var(--sub-main-color);
     }
   }
   .is-workday {
-    border: 1px solid var(--sub-text-color);
+    // border: 1px solid var(--sub-text-color);
     &:before {
       content: '班';
       background: var(--sub-text-color);
@@ -165,18 +167,17 @@ export default defineComponent({
   .is-weekend {
     color: var(--sub-text-color);
   }
+  .is-festival {
+    color: var(--sub-main-color);
+  }
   .is-today,
   .is-selected {
     background: var(--sub-main-color);
     color: #ffffff;
   }
   .not-current-month {
-    color: var(--dis-text-color);
-  }
-  .not-current-month.is-holiday,
-  .not-current-month.is-workday,
-  .not-current-month.is-today {
-    opacity: 0.5;
+    opacity: 0.4;
+    color: var(--sub-text-color);
   }
 }
 </style>

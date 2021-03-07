@@ -1,24 +1,30 @@
 <template>
   <div class="calendar">
-    <calendar-header :currentDate="currentDate" @change="monthOrYearChange" @back="backToday"></calendar-header>
-    <calendar-content :currentDate="currentDate" @select="selectDay"></calendar-content>
+    <div class="calendar-main" :style="{ width: openSidebar ? '600px' : '850px' }">
+      <calendar-header :currentDate="currentDate" @change="monthOrYearChange" @back="backToday"></calendar-header>
+      <calendar-content :currentDate="currentDate" @select="selectDay"></calendar-content>
+    </div>
+    <calendar-sidebar :currentDate="currentDate" :openSidebar="openSidebar" @toggle="openSidebar = !openSidebar"></calendar-sidebar>
   </div>
 </template>
 
 <script lang="ts">
 import calendarHeader from './calendar-header.vue'
 import calendarContent from './calendar-content.vue'
-import { getYearMonthDay } from './utils'
+import calendarSidebar from './calendar-sidebar.vue'
+import { getYearMonthDay } from './utils.ts'
 import { ref, defineComponent } from 'vue'
 export default defineComponent({
   name: 'Calendar',
   components: {
     calendarHeader,
-    calendarContent
+    calendarContent,
+    calendarSidebar
   },
   data() {
     return {
-      currentDate: { year: 0, month: 0, day: 0 }
+      currentDate: { year: 0, month: 0, day: 0, lunar: {} },
+      openSidebar: true
     }
   },
   props: {},
@@ -41,8 +47,7 @@ export default defineComponent({
       }
     },
     selectDay(data: Object) {
-      const { year, month, day } = data
-      this.currentDate = { year, month, day }
+      this.currentDate = data
     },
     backToday() {
       this.currentDate = getYearMonthDay()
@@ -56,7 +61,7 @@ export default defineComponent({
 
 <style>
 :root {
-  --main-color: #3a6fff;
+  --main-color: #1439f6;
   --sub-main-color: #fc684c;
   --bg-color: #ffffff;
   --text-color: #2c2c2e;
@@ -66,9 +71,15 @@ export default defineComponent({
 .calendar {
   background: var(--bg-color);
   color: var(--text-color);
-  padding: 32px 52px;
-  box-sizing: border-box;
   max-width: 850px;
   min-width: 400px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.calendar-main {
+  padding: 32px 52px;
+  box-sizing: border-box;
+  transition: all 0.5s;
 }
 </style>

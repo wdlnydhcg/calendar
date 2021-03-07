@@ -15,7 +15,7 @@ export default defineComponent({
 </script>
 
 <style>
-@import url('./assets/iconfont.css');
+/* @import url('./assets/iconfont.css'); */
 #app {
   background: #ffffff;
 }

@@ -6,8 +6,7 @@
 	"author": "lion1ou",
 	"logo": "calendar.png",
 	"pluginSetting": {
-    "height": 600,
-		"width": 600
+    "height": 602
 	},
 	"features": [
 		{
