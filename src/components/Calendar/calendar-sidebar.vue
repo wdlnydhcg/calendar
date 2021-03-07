@@ -1,8 +1,5 @@
 <template>
   <div class="calendar-sidebar" :style="{ width: openSidebar ? '250px' : '0px' }">
-    <div class="sidebar-open" @click="toggleSidebar">
-      <i class="iconfont icon-jiantou" :style="{ transform: openSidebar ? 'rotate(180deg)' : '' }"></i>
-    </div>
     <div class="sidebar-weather" v-if="weatherData.daily">
       <img class="weather-img" :src="`http://cdn.chuyunt.com/weather/white/${weatherData.daily[0].code_day}@2x.png`" alt="" />
       <!-- 用于切换黑夜模式 -->
@@ -58,11 +55,8 @@ export default defineComponent({
     }
   },
   methods: {
-    toggleSidebar() {
-      this.$emit('toggle')
-    },
     async getWeather() {
-      let res = await jsonp('https://api.seniverse.com/v3/weather/daily.json?key=WWLXWJGTJL&location=hangzhou&language=zh-Hans&unit=c&start=0&days=1')
+      let res = await jsonp('http://api.seniverse.com/v3/weather/daily.json?key=WWLXWJGTJL&location=hangzhou&language=zh-Hans&unit=c&start=0&days=1')
       console.log(res)
       if (res.results && res.results.length) {
         this.weatherData = res.results[0]
@@ -95,7 +89,6 @@ export default defineComponent({
   }
 })
 </script>
-
 <style lang="less" scoped>
 .calendar-sidebar {
   height: 600px;
@@ -105,23 +98,6 @@ export default defineComponent({
   position: relative;
   box-sizing: border-box;
   transition: all 0.5s;
-}
-.sidebar-open {
-  height: 120px;
-  width: 24px;
-  background: rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 240px;
-  left: -24px;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  i {
-    transition: all 0.5s;
-    font-size: 24px;
-  }
 }
 .sidebar-weather {
   overflow: hidden;

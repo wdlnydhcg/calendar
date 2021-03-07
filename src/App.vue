@@ -17,22 +17,13 @@ export default defineComponent({
 <style>
 #app {
   background: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-/* @font-face {
-  font-family: 'PuHuiTi';
-  src: url('http://cdn.chuyunt.com/Alibaba-PuHuiTi-Medium.ttf') format('truetype');
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: 'AlibabaSans';
-  src: url('http://cdn.chuyunt.com/AlibabaSans-Medium.otf') format('otf');
-  font-style: normal;
-  font-weight: normal;
-} */
 * {
   margin: 0;
   padding: 0;
-  /* font-family: 'PuHuiTi', 'AlibabaSans'; */
 }
 </style>
