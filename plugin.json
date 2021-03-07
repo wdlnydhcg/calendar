@@ -5,6 +5,7 @@
 	"version": "0.0.1",
 	"author": "lion1ou",
 	"logo": "calendar.png",
+	"homepage": "https://github.com/lion1ou/calendar",
 	"pluginSetting": {
     "height": 602
 	},
