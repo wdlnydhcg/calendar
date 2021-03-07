@@ -2,11 +2,11 @@
   <div class="calendar-header">
     <div class="calendar-date">{{ currentDate.year }} 年 {{ currentDate.month }} 月 {{ currentDate.day }} 日</div>
     <div class="calendar-change-btn">
-      <i class="iconfont icon-jintian icon-jin" @click="back" v-if="showJin"></i>
-      <i class="iconfont icon-Arrow-LeftCircle icon-arrow" @click="change('-')"></i>
-      <i class="iconfont icon-nianbao icon-select" :class="{ 'icon-color': unit === 'year' }" @click="unit = 'year'"></i>
-      <i class="iconfont icon-yuebao icon-select" :class="{ 'icon-color': unit === 'month' }" @click="unit = 'month'"></i>
-      <i class="iconfont icon-Arrow-RightCircle icon-arrow" @click="change('+')"></i>
+      <div class="icon-btn-jin" @click="back" v-if="showJin">今</div>
+      <div class="icon-btn-unit icon-color icon-arrow" @click="change('-')">-</div>
+      <div class="icon-btn-unit" :class="{ 'icon-color': unit === 'year' }" @click="unit = 'year'" style="margin-right: 6px">年</div>
+      <div class="icon-btn-unit" :class="{ 'icon-color': unit === 'month' }" @click="unit = 'month'">月</div>
+      <div class="icon-btn-unit icon-color icon-arrow" @click="change('+')">+</div>
     </div>
   </div>
 </template>
@@ -64,27 +64,44 @@ export default defineComponent({
   flex-direction: row;
   align-items: center;
 }
-.iconfont {
-  transition: all 0.3s;
-  color: var(--dis-text-color);
+.icon-btn-jin {
+  background: var(--sub-main-color);
+  height: 30px;
+  width: 30px;
+  margin-right: 15px;
+  color: #ffffff;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
 }
-.icon-select {
-  font-size: 30px;
+.icon-btn-unit {
+  height: 22px;
+  width: 22px;
+  color: #ffffff;
+  background: var(--dis-text-color);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  cursor: default;
 }
 .icon-color {
-  color: var(--main-color);
+  background: var(--main-color);
+  color: #ffffff;
 }
+
 .icon-arrow {
   margin: 0 6px;
-  font-size: 24px;
-  color: var(--sub-text-color);
+  font-size: 14px;
+  background: var(--sub-text-color);
+  border-radius: 22px;
+  padding-bottom: 2px;
+  box-sizing: border-box;
 }
-.icon-arrow:hover {
-  color: var(--main-color);
-}
-.icon-jin {
-  color: var(--sub-main-color);
-  font-size: 30px;
-  margin-right: 15px;
+.icon-btn-unit:hover {
+  background: var(--main-color);
 }
 </style>

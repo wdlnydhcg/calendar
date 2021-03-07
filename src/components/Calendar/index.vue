@@ -4,7 +4,7 @@
       <calendar-header :currentDate="currentDate" @change="monthOrYearChange" @back="backToday"></calendar-header>
       <calendar-content :currentDate="currentDate" @select="selectDay"></calendar-content>
       <div class="sidebar-open" @click="openSidebar = !openSidebar">
-        <i class="iconfont icon-jiantou" :style="{ transform: openSidebar ? 'rotate(180deg)' : '' }"></i>
+        <img :src="arrowIcon" alt="" :style="{ transform: openSidebar ? 'rotate(180deg)' : '' }" />
       </div>
     </div>
     <calendar-sidebar :currentDate="currentDate" :openSidebar="openSidebar"></calendar-sidebar>
@@ -17,6 +17,7 @@ import calendarContent from './calendar-content.vue'
 import calendarSidebar from './calendar-sidebar.vue'
 import { getYearMonthDay } from './utils.ts'
 import { ref, defineComponent } from 'vue'
+import arrow from '../../assets/arrow.svg'
 export default defineComponent({
   name: 'Calendar',
   components: {
@@ -27,7 +28,8 @@ export default defineComponent({
   data() {
     return {
       currentDate: { year: 0, month: 0, day: 0, lunar: {} },
-      openSidebar: true
+      openSidebar: true,
+      arrowIcon: arrow
     }
   },
   props: {},
@@ -107,9 +109,9 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  i {
+  img {
     transition: all 0.5s;
-    font-size: 24px;
+    width: 24px;
     color: #ffffff;
   }
 }

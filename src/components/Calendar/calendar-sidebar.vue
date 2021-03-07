@@ -4,10 +4,7 @@
       <img class="weather-img" :src="`http://cdn.chuyunt.com/weather/white/${weatherData.daily[0].code_day}@2x.png`" alt="" />
       <!-- 用于切换黑夜模式 -->
       <!-- <img class="weather-img" :src="`http://cdn.chuyunt.com/weather/black/${weatherData.daily[0].code_day}@2x.png`" alt="" /> -->
-      <div class="weather-info">
-        <i class="iconfont icon-dingwei"></i>
-        {{ weatherData.location.name }} {{ weatherData.daily[0].text_day }} {{ weatherData.daily[0].low }} - {{ weatherData.daily[0].high }} ℃
-      </div>
+      <div class="weather-info">{{ weatherData.location.name }} {{ weatherData.daily[0].text_day }} {{ weatherData.daily[0].low }} - {{ weatherData.daily[0].high }} ℃</div>
     </div>
     <div class="current-time">{{ time }}</div>
     <div class="sidebar-info-group">
