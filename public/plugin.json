@@ -3,7 +3,7 @@
 	"description": "一个简单、好用、美观的日历插件",
 	"main": "index.html",
 	"preload": "preload.js",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": "lion1ou",
 	"logo": "calendar.png",
 	"homepage": "https://github.com/lion1ou/calendar",
