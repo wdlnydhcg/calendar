@@ -6,9 +6,11 @@ export const getYearMonthDay = (time: string | number | Date): object => {
   const year: Number = now.getFullYear() // 2021
   const month: Number = now.getMonth() + 1 // 0 - 11
   const day: Number = now.getDate()
+  const hour: Number = now.getHours()
+  const minutes: Number = now.getMinutes()
   const week: Number = now.getDay()
   const lunar: Object = calendarjs.solar2lunar(year, month, day) // 农历信息
-  const result = { year, month, day, week, lunar }
+  const result = { year, month, day, week, lunar, hour, minutes }
   return result
 }
 

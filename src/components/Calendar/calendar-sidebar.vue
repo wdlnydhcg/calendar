@@ -5,6 +5,7 @@
       <!-- 用于切换黑夜模式 -->
       <!-- <img class="weather-img" :src="`http://cdn.chuyunt.com/weather/black/${weatherData.daily[0].code_day}@2x.png`" alt="" /> -->
       <div class="weather-info">{{ weatherData.location.name }} {{ weatherData.daily[0].text_day }} {{ weatherData.daily[0].low }} - {{ weatherData.daily[0].high }} ℃</div>
+      <div class="last-update">更新时间：{{ lastUpdate }}</div>
     </div>
     <div class="current-time">{{ time }}</div>
     <div class="sidebar-info-group">
@@ -17,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { getYearMonthDay, jsonp } from './utils.ts'
+import { getYearMonthDay } from './utils.ts'
 import { ref, defineComponent } from 'vue'
 export default defineComponent({
   name: 'CalendarHeader',
@@ -25,7 +26,8 @@ export default defineComponent({
     return {
       weatherData: {},
       time: '00:00',
-      sI: null
+      sI: null,
+      lastUpdate: ''
     }
   },
   props: {
@@ -53,11 +55,13 @@ export default defineComponent({
   },
   methods: {
     async getWeather() {
-      let res = await jsonp('http://api.seniverse.com/v3/weather/daily.json?key=WWLXWJGTJL&location=hangzhou&language=zh-Hans&unit=c&start=0&days=1')
+      // 'http://api.seniverse.com/v3/weather/daily.json?key=WWLXWJGTJL&location=hangzhou&language=zh-Hans&unit=c&start=0&days=1'
+      let res = await window.exports.request.getWeatherDaily()
       console.log(res)
       if (res.results && res.results.length) {
         this.weatherData = res.results[0]
-        localStorage.setItem(this.weatherData.daily[0].date, JSON.stringify(this.weatherData))
+        let { year, month, day, hour, minutes } = getYearMonthDay(res.results[0].last_update)
+        this.lastUpdate = `${year}-${month}-${day} ${this.addZero(hour)}:${this.addZero(minutes)}`
       }
     },
     getTime() {
@@ -72,13 +76,7 @@ export default defineComponent({
     }
   },
   created() {
-    const now = getYearMonthDay()
-    let weatherData = localStorage.getItem(`${now.year}-${now.month}-${now.day}`)
-    if (weatherData) {
-      this.weatherData = JSON.parse(weatherData)
-    } else {
-      this.getWeather()
-    }
+    this.getWeather()
     this.getTime()
   },
   beforeUnmount() {
@@ -104,12 +102,19 @@ export default defineComponent({
   flex-direction: column;
   width: 250px;
   .weather-img {
-    width: 80px;
+    width: 90px;
     height: auto;
     margin-bottom: 24px;
   }
   .weather-info {
     font-weight: 100;
+    font-size: 20px;
+  }
+  .last-update {
+    font-size: 10px;
+    margin-top: 8px;
+    font-weight: 100;
+    opacity: 0.5;
   }
 }
 .current-time {
