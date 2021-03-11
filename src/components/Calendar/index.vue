@@ -59,11 +59,6 @@ export default defineComponent({
     }
   },
   created() {
-    window.utools &&
-      window.utools.onPluginEnter(({ code, type, payload, optional }) => {
-        console.log('用户进入插件', code, type, payload, optional)
-        this.currentDate = getYearMonthDay()
-      })
     this.currentDate = getYearMonthDay()
   }
 })

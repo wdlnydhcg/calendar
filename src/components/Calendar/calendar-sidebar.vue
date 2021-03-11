@@ -1,11 +1,15 @@
 <template>
   <div class="calendar-sidebar" :style="{ width: openSidebar ? '250px' : '0px' }">
-    <div class="sidebar-weather" v-if="weatherData.daily">
-      <img class="weather-img" :src="`http://cdn.chuyunt.com/weather/white/${weatherData.daily[0].code_day}@2x.png`" alt="" />
+    <div class="sidebar-weather">
+      <!-- 天气现象代码说明: https://docs.seniverse.com/api/start/code.html -->
+      <img class="weather-img" :src="`http://cdn.chuyunt.com/weather/white/${weatherData.daily.length ? weatherData.daily[0].code_day : '99'}@2x.png`" alt="" />
       <!-- 用于切换黑夜模式 -->
       <!-- <img class="weather-img" :src="`http://cdn.chuyunt.com/weather/black/${weatherData.daily[0].code_day}@2x.png`" alt="" /> -->
-      <div class="weather-info">{{ weatherData.location.name }} {{ weatherData.daily[0].text_day }} {{ weatherData.daily[0].low }} - {{ weatherData.daily[0].high }} ℃</div>
-      <div class="last-update">更新时间：{{ lastUpdate }}</div>
+      <div class="weather-info">
+        {{ weatherData.location.name }} {{ weatherData.daily.length ? weatherData.daily[0].text_day : '未知' }} {{ weatherData.daily.length ? weatherData.daily[0].low + ' - ' : '' }}
+        {{ weatherData.daily.length ? weatherData.daily[0].high : 0 }} ℃
+      </div>
+      <div class="last-update" @click="getWeather">{{ weatherData.daily.length ? `更新时间：${lastUpdate}` : '点击刷新' }}</div>
     </div>
     <div class="current-time">{{ time }}</div>
     <div class="sidebar-info-group">
@@ -24,8 +28,14 @@ export default defineComponent({
   name: 'CalendarHeader',
   data() {
     return {
-      weatherData: {},
-      time: '00:00',
+      weatherData: {
+        location: {
+          name: ''
+        },
+        daily: [],
+        last_update: ''
+      },
+      time: `${this.addZero(getYearMonthDay().hour)}:${this.addZero(getYearMonthDay().minutes)}`,
       sI: null,
       lastUpdate: ''
     }
@@ -56,18 +66,22 @@ export default defineComponent({
   methods: {
     async getWeather() {
       // 'http://api.seniverse.com/v3/weather/daily.json?key=WWLXWJGTJL&location=hangzhou&language=zh-Hans&unit=c&start=0&days=1'
-      let res = await window.exports.request.getWeatherDaily()
-      console.log(res)
-      if (res.results && res.results.length) {
-        this.weatherData = res.results[0]
-        let { year, month, day, hour, minutes } = getYearMonthDay(res.results[0].last_update)
-        this.lastUpdate = `${year}-${month}-${day} ${this.addZero(hour)}:${this.addZero(minutes)}`
+      try {
+        let res = await window.exports.request.getWeatherDaily()
+        console.log(res)
+        if (res.results && res.results.length) {
+          this.weatherData = res.results[0]
+          let { year, month, day, hour, minutes } = getYearMonthDay(res.results[0].last_update)
+          this.lastUpdate = `${year}-${month}-${day} ${this.addZero(hour)}:${this.addZero(minutes)}`
+        }
+      } catch (error) {
+        console.log('console.log(error)', error)
       }
     },
     getTime() {
       this.sI = setInterval(() => {
-        let now = new Date()
-        this.time = `${this.addZero(now.getHours())}:${this.addZero(now.getMinutes())}`
+        let { hour, minutes } = getYearMonthDay()
+        this.time = `${this.addZero(hour)}:${this.addZero(minutes)}`
       }, 1000)
     },
     addZero(num: number) {
@@ -76,6 +90,11 @@ export default defineComponent({
     }
   },
   created() {
+    window.utools &&
+      window.utools.onPluginEnter(({ code, type, payload, optional }) => {
+        console.log('用户进入插件', code, type, payload, optional)
+        this.getWeather()
+      })
     this.getWeather()
     this.getTime()
   },

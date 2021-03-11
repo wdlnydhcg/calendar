@@ -77,7 +77,7 @@ export default defineComponent({
         }
         result[Math.floor(i / 7)].push({ year, month, day, week, isHoliday, isWorkDay, isWeekend, isCurrentMonth, isToday, lunar, isSelected, isFestival })
       }
-      console.log(result)
+      // console.log(result)
       return result
     }
   },

@@ -1,33 +1,6 @@
 var crypto = require('crypto')
 var querystring = require('querystring')
 const http = require('http')
-
-const port = 3008
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'text/plain')
-  res.end('你好世界\n')
-})
-
-server.listen(port, () => {
-  console.log(`服务器运行在 http://127.0.0.1:${port}/`)
-})
-
-const interfaces = require('os').networkInterfaces() //服务器本机地址
-let IPAdress = ''
-for (var devName in interfaces) {
-  var iface = interfaces[devName]
-  for (var i = 0; i < iface.length; i++) {
-    var alias = iface[i]
-    if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
-      IPAdress = alias.address
-    }
-  }
-}
-
-console.log(IPAdress)
-
 var URL = 'http://api.seniverse.com/v3/'
 
 function Api(uid, secretKey) {
@@ -69,7 +42,6 @@ function request(url, data) {
       res.on('end', () => {
         try {
           const parsedData = JSON.parse(rawData)
-          console.log(parsedData)
           resolve(parsedData)
         } catch (e) {
           reject(e.message)
