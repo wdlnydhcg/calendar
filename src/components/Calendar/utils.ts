@@ -1,5 +1,3 @@
-
-import CryptoJS from 'crypto-js'
 import { calendarjs } from './calendar'
 export const getYearMonthDay = (time: string | number | Date): object => {
   const now: Date = time ? new Date(time) : new Date()
@@ -14,37 +12,37 @@ export const getYearMonthDay = (time: string | number | Date): object => {
   return result
 }
 
-export const jsonp = (url: string) => {
-  if (!url) {
-    console.error('请传入一个url参数')
-    return
-  }
-  return new Promise((resolve, reject) => {
-    window.showWeather = (result: object ) => {
-      resolve(result)
-    }
-    var JSONP = document.createElement('script')
-    JSONP.type = 'text/javascript'
-    JSONP.src = `${url}&${authCode()}&callback=showWeather`
-    document.getElementsByTagName('head')[0].appendChild(JSONP)
-    setTimeout(() => {
-      document.getElementsByTagName('head')[0].removeChild(JSONP)
-    }, 500)
-  })
-}
+// export const jsonp = (url: string) => {
+//   if (!url) {
+//     console.error('请传入一个url参数')
+//     return
+//   }
+//   return new Promise((resolve, reject) => {
+//     window.showWeather = (result: object ) => {
+//       resolve(result)
+//     }
+//     var JSONP = document.createElement('script')
+//     JSONP.type = 'text/javascript'
+//     JSONP.src = `${url}&${authCode()}&callback=showWeather`
+//     document.getElementsByTagName('head')[0].appendChild(JSONP)
+//     setTimeout(() => {
+//       document.getElementsByTagName('head')[0].removeChild(JSONP)
+//     }, 500)
+//   })
+// }
 
-export const authCode = () => {
-  let now = Math.floor(new Date().getTime() / 1000)
-  let ttl = 300 // 失效时间
-  const uid = 'U076256763' // 公钥
-  const privateKey = 'WWLXWJGTJL' // 私钥
-  const message = `ts=${now}&ttl=${ttl}&uid=${uid}`
-  let code1 = CryptoJS.HmacSHA1(message, privateKey).toString(CryptoJS.enc.Base64)
-  let signCode = encodeURIComponent(code1)
-  let code = `${message}&sig=${signCode}`
-  console.log('code', code)
-  return code
-}
+// export const authCode = () => {
+//   let now = Math.floor(new Date().getTime() / 1000)
+//   let ttl = 300 // 失效时间
+//   const uid = 'U076256763' // 公钥
+//   const privateKey = 'WWLXWJGTJL' // 私钥
+//   const message = `ts=${now}&ttl=${ttl}&uid=${uid}`
+//   let code1 = CryptoJS.HmacSHA1(message, privateKey).toString(CryptoJS.enc.Base64)
+//   let signCode = encodeURIComponent(code1)
+//   let code = `${message}&sig=${signCode}`
+//   console.log('code', code)
+//   return code
+// }
 
 export const holidayList = [
   '2021-1-1',
